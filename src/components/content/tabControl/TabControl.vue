@@ -35,10 +35,12 @@ export default {
   display: flex;
   text-align: center;
   background: white;
+  height: 44px;
 }
 .tab-item{
   flex: 1;
   padding: 10px;
+  padding-top: 12px;
 }
 .active {
   color: var(--color-high-text);

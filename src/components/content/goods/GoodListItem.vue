@@ -1,6 +1,6 @@
 <template>
 <div class="Good-list-item" @click="clickdetail">
-  <img :src="goodsitem.show.img" @load="ImageLoad">
+  <img :src="showImg" @load="ImageLoad">
   <div class="goods-info">
     <p>{{goodsitem.title}}</p>
     <span class="price">{{goodsitem.price}}</span>
@@ -25,9 +25,20 @@ export default {
   methods:{
     ImageLoad(){
       this.$bus.$emit('ItemImageLoad')
+      // if (this.$route.path.indexOf('/home')){
+      //   this.$bus.$emit('ItemImageLoad')
+      // }else if (this.$route.path.indexOf('/detail')){
+      //   this.$bus.$emit('ItemImageLoad')
+      // }
     },
     clickdetail(){
       this.$router.push('/detail/'+this.goodsitem.iid)
+    },
+
+  },
+  computed:{
+    showImg(){
+      return this.goodsitem.img || this.goodsitem.image || this.goodsitem.show.img
     }
   }
 }

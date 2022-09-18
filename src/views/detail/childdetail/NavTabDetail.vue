@@ -30,6 +30,7 @@ export default {
   methods:{
     TitleClick(index){
       this.currentIndex = index
+      this.$emit('NavTitleClick',index)
     },
     leftback(){
       this.$router.back()

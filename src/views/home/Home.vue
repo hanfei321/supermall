@@ -1,13 +1,13 @@
 <template>
   <div id="home">
     <NavBer class="home-nav">
-      <div slot="center" class="navcenter">购物车</div>
+      <div slot="center" class="navcenter">购物街</div>
     </NavBer>
     <TabControl
       :titles="['流行','新款','精选']"
       class="tab-Control"
       @tabclick="tabclick"
-      ref="tobcontrol"
+      ref="Toptobcontrol"
       v-show="tabShow">
     </TabControl>
 
@@ -44,9 +44,12 @@ import TabControl from "@/components/content/tabControl/TabControl";
 import Goodlist from "@/components/content/goods/Goodlist";
 import scroll from "@/components/commen/scroll/Scroll";
 import BackTop from "@/components/content/BackTop/BackTop";
+import {debounce} from "@/common/debounce";
+import {itemListMixin} from "@/common/mixin.js"
 
   export default {
     name: "Home",
+    mixins:[itemListMixin],
     data(){
       return{
         banners:[],
@@ -62,7 +65,7 @@ import BackTop from "@/components/content/BackTop/BackTop";
         isTabControlshow:false,
         tabShow:false,
         istabfshow:true,
-        saveY:0
+        saveY:0,
       }
     },
     components:{
@@ -73,7 +76,8 @@ import BackTop from "@/components/content/BackTop/BackTop";
       TabControl,
       Goodlist,
       scroll,
-      BackTop
+      BackTop,
+
     },
     created() {
       this.getHomeMultData()
@@ -96,13 +100,19 @@ import BackTop from "@/components/content/BackTop/BackTop";
     deactivated() {
       console.log(this.$refs.scroll.getScrollY())
       this.saveY = this.$refs.scroll.getScrollY()
+
+      // 取消全局事件监听
+      this.$bus.$off('ItemImageLoad',this.itemImgLister)
     },
 
     mounted() {
-      const refresh = this.debounce(this.$refs.scroll.refresh,20)
-      this.$bus.$on('ItemImageLoad',() => {
-        refresh()
-      })
+      // this.homeLister = () => {
+      //   refresh()
+      // }
+      // // 防抖函数
+      // const refresh = debounce(this.$refs.scroll.refresh,20)
+      // this.$bus.$on('ItemImageLoad',this.homeLister)
+
       // 1 timer=null 不用清楚  等待delay时间返回函数
       // 可是这个时间内 refresh() 又被执行
       // 2 来到第二次 第二次 timer不为null 清除timer 使其停止返回函数
@@ -117,16 +127,6 @@ import BackTop from "@/components/content/BackTop/BackTop";
 
     },
     methods:{
-      debounce(func,delay){
-        let timer = null
-        return (...args) => {
-          if (timer) clearTimeout(timer)
-            timer = setTimeout(() => {
-              func.apply(this,args)
-          },delay)
-
-        }
-      },
       backClick(){
         this.$refs.scroll.scrollTo(0,0,500)
       },
@@ -159,9 +159,12 @@ import BackTop from "@/components/content/BackTop/BackTop";
             this.currentType = 'sell'
             break
         }
+        this.$refs.tobcontrol.currentIndex = index
+        this.$refs.Toptobcontrol.currentIndex = index
       },
 
 
+      // 请求数据
       getHomeMultData(){
         getHomeMultData().then(res => {
           // console.log(res.data.recommend.list)
