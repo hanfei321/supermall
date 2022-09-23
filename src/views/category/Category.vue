@@ -1,83 +1,13 @@
 <template>
-<div class="wrapper" ref="aaaa">
-  <ul class="content">
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-    <li>1</li>
-  </ul>
+<div>
+<navBer>
+  <div slot="center">购物车</div>
+</navBer>
 </div>
 </template>
 
 <script>
-import BScroll from 'better-scroll'
+import navBer from "@/components/commen/navber/NavBer";
   export default {
     name: "Category",
     data(){
@@ -86,13 +16,13 @@ import BScroll from 'better-scroll'
       }
     },
     mounted() {
-      this.scroll = new BScroll(this.$refs.aaaa, {
-        // probeType: 3,
-        // pullUpLoad: true
-      })
+
     },
     methods:{
 
+    },
+    components:{
+      navBer
     }
   }
 </script>

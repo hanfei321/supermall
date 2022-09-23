@@ -11,6 +11,9 @@
     <DetailCommentInfo :comment-info="CommentInfo" ref="comment"></DetailCommentInfo>
     <Goodlist :goodlistdata="Recommend" ref="recommend"></Goodlist>
   </scroll>
+  <detail-bottom-bar :showpop="topImages" :showgoods="goodsInfo" :showParam="Param" :showiid="iid"/>
+
+  <BackTop @click.native="backClick" v-show="isShowBackTop"></BackTop>
 </div>
 </template>
 
@@ -27,6 +30,8 @@ import Goodlist from "@/components/content/goods/Goodlist";
 import {getDetail, Goods, GoodsParam, Shop, getRecommend} from "@/network/detail";
 import {debounce} from "@/common/debounce";
 import {itemListMixin} from "@/common/mixin.js"
+import BackTop from "@/components/content/BackTop/BackTop";
+import DetailBottomBar from "@/views/detail/childdetail/DetailBottomBar";
 export default {
   name: "detail",
   mixins:[itemListMixin],
@@ -45,6 +50,7 @@ export default {
       NavTitleList:[],
       DetailLister:null,
       getTheme:null,
+      isShowBackTop: false,
     }
   },
   components:{
@@ -56,15 +62,18 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
-    Goodlist
+    Goodlist,
+    BackTop,
+    DetailBottomBar
   },
   created() {
     this.iid = this.$route.params.iid
     console.log(this.iid)
     getDetail(this.iid).then(
       res => {
-        console.log(res)
+
         const data = res.result
+        console.log(data)
         this.topImages = data.itemInfo.topImages
         this.goodsInfo = new Goods(data.itemInfo, data.columns, data.shopInfo.services)
         this.shop = new Shop(data.shopInfo)
@@ -105,6 +114,7 @@ export default {
 
     },
     contentScroll(position){
+      this.isShowBackTop = (-position.y) > 1000
       // console.log(position)
       const PositionY = -position.y
       // console.log(PositionY)
@@ -116,8 +126,11 @@ export default {
           this.$refs.navtab.currentIndex = i
         }
       }
+    },
+    backClick(){
+      this.$refs.scroll.scrollTo(0,0,500)
+    },
 
-    }
   },
   mounted() {
 
@@ -143,6 +156,6 @@ export default {
   background-color: #fff;
 }
 .centent{
-  height: calc(100% - 44px);
+  height: calc(100% - 44px - 58px);
 }
 </style>

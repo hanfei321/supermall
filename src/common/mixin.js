@@ -1,5 +1,5 @@
 import {debounce} from "@/common/debounce";
-
+import BackTop from "@/components/content/BackTop/BackTop";
 export const itemListMixin = {
   data(){
     return{
@@ -7,6 +7,7 @@ export const itemListMixin = {
       // newRefresh:null,
     }
   },
+
   mounted(){
     this.itemImgLister = () => {
       refresh()
@@ -17,3 +18,5 @@ export const itemListMixin = {
     console.log('混入')
   }
 }
+
+
