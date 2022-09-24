@@ -3,7 +3,7 @@
     <CheckButton class="select-all" v-model="isSelectAll" @click.native="checkBtnClick"></CheckButton>
     <span>全选</span>
     <span class="total-price">合计: ¥{{totalPrice}}</span>
-    <span class="buy-product">去计算({{cartLengths}})</span>
+    <span class="buy-product" @click="showtoast">去计算({{cartLengths}})</span>
   </div>
 </template>
 
@@ -64,6 +64,12 @@ export default {
         this.cartLists.forEach(item => item.checked = false)
       }else {
         this.cartLists.forEach(item => item.checked = true)
+      }
+    },
+    showtoast(){
+      // console.log(this.$toast)
+      if (!this.isSelectAll){
+        this.$toast({message: '请添加商品'})
       }
     }
   }

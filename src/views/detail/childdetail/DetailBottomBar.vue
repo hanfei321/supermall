@@ -186,7 +186,9 @@ export default {
       product.price = this.showgoods.realPrice
 
       this.$store.dispatch('addCart',product).then(res => {
-        console.log(res)})
+        // this.$toast(res,2000)
+        this.$toast({message: res})
+      })
 
     }
 
